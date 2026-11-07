@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-Hant-TW" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>蔡承佑 × MICH｜VP 面談</title>
+<style>
+  :root {
+    --bg: #ebeae7;
+    --ink: #1f1f1f;
+    --muted: #77736c;
+    --line: #cfccc5;
+    --accent: #c9a35a;
+    --accent-deep: #a8802f;
+    /* liquid glass */
+    --glass: rgba(255, 255, 255, .38);
+    --glass-edge: rgba(255, 255, 255, .75);
+    --glass-shadow: 0 10px 40px rgba(70, 55, 25, .14), inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 0 rgba(255, 255, 255, .25);
+  }
+  :root[data-lang="ja"] body { font-family: "Noto Sans JP", "Hiragino Sans", sans-serif; }
+
+  /* Language switch: show only the current language's text */
+  [data-l] { display: none; }
+  :root[data-lang="zh"] [data-l="zh"],
+  :root[data-lang="ja"] [data-l="ja"],
+  :root[data-lang="en"] [data-l="en"] { display: revert; }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; color: var(--ink); }
+  body {
+    font-family: "Noto Sans TC", -apple-system, "PingFang TC", sans-serif; overflow: hidden;
+    background:
+      radial-gradient(40vw 40vw at 78% 38%, rgba(201, 163, 90, .30), transparent 70%),
+      radial-gradient(35vw 35vw at 12% 90%, rgba(150, 160, 175, .22), transparent 70%),
+      var(--bg);
+  }
+
+  /* Circuit layer: faint traces with small light pulses travelling along them */
+  .circuit { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .circuit .trace { fill: none; stroke: rgba(150, 130, 90, .28); stroke-width: 1.2; }
+  .circuit .node { fill: var(--bg); stroke: rgba(150, 130, 90, .45); stroke-width: 1.2; }
+  .circuit .pulse {
+    fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round;
+    stroke-dasharray: 36 1600; stroke-dashoffset: 1636;
+    filter: drop-shadow(0 0 4px rgba(201, 163, 90, .9));
+    animation: run 7s linear infinite;
+  }
+  .circuit .pulse:nth-of-type(2n) { animation-duration: 9s; animation-delay: -3s; }
+  .circuit .pulse:nth-of-type(3n) { animation-duration: 11s; animation-delay: -6s; }
+  @keyframes run { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .circuit .pulse { animation: none; opacity: 0; } }
+
+  /* Snap scroller: one slide per screen */
+  .deck {
+    position: relative; z-index: 2;
+    height: 100svh; overflow-y: auto;
+    scroll-snap-type: y mandatory; scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  .deck::-webkit-scrollbar { display: none; }
+  @media (prefers-reduced-motion: reduce) { .deck { scroll-behavior: auto; } }
+  .slide {
+    position: relative; min-height: 100svh;
+    scroll-snap-align: start; scroll-snap-stop: always;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 84px 48px 32px; }
+
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    backdrop-filter: blur(18px) saturate(1.6);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Fixed chrome */
+  .topbar {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 10;
+    width: min(1200px, calc(100% - 32px));
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 22px; border-radius: 999px;
+  }
+  .brand { font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
+  .brand b { color: var(--accent-deep); }
+  .counter { font-size: .85em; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: .08em; }
+  .bar-right { display: flex; align-items: center; gap: 16px; }
+  .langs-switch { display: flex; padding: 3px; border-radius: 999px; background: rgba(0, 0, 0, .05); }
+  .langs-switch button {
+    border: 0; background: transparent; padding: 4px 12px; border-radius: 999px;
+    font: inherit; font-size: .82em; color: var(--muted); cursor: pointer;
+  }
+  .langs-switch button[aria-pressed="true"] { background: #fff; color: var(--ink); font-weight: 700; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+  .dots {
+    position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 10;
+    display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none;
+  }
+  .dots a {
+    display: block; width: 9px; height: 9px; border-radius: 50%;
+    border: 1px solid var(--muted); transition: background .2s, transform .2s;
+  }
+  .dots a[aria-current="true"] { background: var(--accent); border-color: var(--accent); transform: scale(1.35); }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    font-size: .78em; letter-spacing: .14em; color: #4a463f;
+  }
+  .tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+  .slide h2 { font-size: clamp(1.7rem, 3.2vw, 2.6rem); margin: 16px 0 8px; line-height: 1.2; }
+  .lead { color: #4a463f; margin: 0 0 28px; font-size: 1.02em; }
+  .grid { display: grid; gap: 16px; }
+  .grid.c3 { grid-template-columns: repeat(3, 1fr); }
+  .card { border-radius: 20px; padding: 24px 26px; margin: 0; }
+  .card h3 { font-size: 1.2em; margin: 8px 0 12px; line-height: 1.4; }
+  .card p { margin: 0; font-size: .95em; line-height: 1.7; color: #3d3a34; }
+  .kicker { font-size: .72em; letter-spacing: .16em; color: var(--accent-deep); font-weight: 600; }
+  .card ul { margin: 0; padding-left: 18px; font-size: .95em; line-height: 1.8; color: #3d3a34; }
+  .card li::marker { color: var(--accent); }
+
+  /* Career path: three steps joined by arrows, the last one highlighted */
+  .path { position: relative; }
+  .path .card { position: relative; }
+  .path .card + .card::before {
+    content: "→"; position: absolute; left: -16px; top: 50%; transform: translate(-50%, -50%);
+    color: var(--accent-deep); font-weight: 700;
+  }
+  .path .goal { background: rgba(201, 163, 90, .16); border-color: rgba(201, 163, 90, .45); }
+  .path .goal h3 { font-size: 1.35em; }
+
+  /* Bottom strip: a short row of steps */
+  .strip {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+    margin-top: 18px; padding: 14px 24px; border-radius: 999px; font-size: .95em; color: #4a463f;
+  }
+  .strip .label { font-size: .75em; letter-spacing: .16em; color: var(--accent-deep); font-weight: 600; margin-right: 6px; }
+  .strip .step { padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .6); border: 1px solid var(--glass-edge); font-weight: 600; color: var(--ink); }
+  .strip .to { color: var(--accent-deep); }
+  .strip .note { margin-left: auto; }
+  .strip .note b { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 96px 16px 32px; }
+    .topbar { padding: 10px 16px; }
+    .counter { display: none; }
+    .dots { right: 8px; }
+    .grid.c3 { grid-template-columns: 1fr; }
+    .path .card + .card::before { content: "↓"; left: 50%; top: -8px; }
+    .strip { border-radius: 18px; }
+    .strip .note { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="circuit" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <g>
+    <path class="trace" d="M0 180 H90 L130 220 V400"/>
+    <path class="trace" d="M0 640 H70 L110 600 V520"/>
+    <path class="trace" d="M1440 120 H1240 L1200 160 V260 L1160 300 H980"/>
+    <path class="trace" d="M1440 780 H1300 L1260 740 V640 L1220 600 H1080"/>
+    <path class="trace" d="M560 900 V800 L600 760 H760 L800 720 V660"/>
+    <path class="trace" d="M720 0 V70 L760 110 H900 L940 150 V200"/>
+  </g>
+  <g>
+    <circle class="node" cx="130" cy="400" r="4"/>
+    <circle class="node" cx="110" cy="520" r="4"/>
+    <circle class="node" cx="980" cy="300" r="4"/>
+    <circle class="node" cx="1080" cy="600" r="4"/>
+    <circle class="node" cx="800" cy="660" r="4"/>
+    <circle class="node" cx="940" cy="200" r="4"/>
+  </g>
+  <g>
+    <path class="pulse" d="M0 180 H90 L130 220 V400"/>
+    <path class="pulse" d="M0 640 H70 L110 600 V520"/>
+    <path class="pulse" d="M1440 120 H1240 L1200 160 V260 L1160 300 H980"/>
+    <path class="pulse" d="M1440 780 H1300 L1260 740 V640 L1220 600 H1080"/>
+    <path class="pulse" d="M560 900 V800 L600 760 H760 L800 720 V660"/>
+    <path class="pulse" d="M720 0 V70 L760 110 H900 L940 150 V200"/>
+  </g>
+</svg>
+
+<header class="topbar glass">
+  <div class="brand">蔡承佑 × <b>MICH</b></div>
+  <div class="bar-right">
+    <div class="langs-switch" role="group" aria-label="Language">
+      <button type="button" data-set="zh" aria-pressed="true">中</button>
+      <button type="button" data-set="en" aria-pressed="false">EN</button>
+      <button type="button" data-set="ja" aria-pressed="false">日</button>
+    </div>
+    <div class="counter"><span id="cur">1</span> / <span id="total"></span></div>
+  </div>
+</header>
+<ol class="dots" aria-label="Slides"></ol>
+
+<main class="deck" id="deck">
+
+  <section class="slide" id="s-career" data-title="職涯發展規劃" data-title-en="Career plan" data-title-ja="キャリアプラン">
+    <div class="wrap">
+      <span class="tag glass"><span data-l="zh">01 · 職涯發展規劃</span><span data-l="en">01 · Career plan</span><span data-l="ja">01 · キャリアプラン</span></span>
+      <h2><span data-l="zh">先懂客戶，再用產品解決問題</span><span data-l="en">Understand the customer first, then solve it with the product</span><span data-l="ja">まず顧客を理解し、製品で課題を解決する</span></h2>
+      <p class="lead"><span data-l="zh">這是我選行銷的原因，也是我想走的路。</span><span data-l="en">It's why I chose marketing, and where I want to go.</span><span data-l="ja">マーケティングを選んだ理由であり、目指す道です。</span></p>
+      <div class="grid c3 path">
+        <article class="card glass">
+          <div class="kicker"><span data-l="zh">起點 · 為什麼是行銷</span><span data-l="en">START · WHY MARKETING</span><span data-l="ja">原点 · なぜマーケティングか</span></div>
+          <h3><span data-l="zh">喜歡了解客戶的需求與預算</span><span data-l="en">I like learning what customers need and can spend</span><span data-l="ja">顧客のニーズと予算を知るのが好き</span></h3>
+          <p><span data-l="zh">透過交流，用自家產品幫他們解決問題；我也喜歡跟人溝通。</span><span data-l="en">Through conversation, I help them solve problems with our product. And I enjoy talking with people.</span><span data-l="ja">対話を通じて自社製品で課題を解決したい。人とのコミュニケーションも好きです。</span></p>
+        </article>
+        <article class="card glass">
+          <div class="kicker"><span data-l="zh">現在 · 為什麼是 MICH</span><span data-l="en">NOW · WHY MICH</span><span data-l="ja">現在 · なぜ MICH か</span></div>
+          <h3><span data-l="zh">企業想用 AI，但資料要留在自己的機房</span><span data-l="en">Companies want AI, but their data must stay in-house</span><span data-l="ja">AI は使いたいが、データは自社に置きたい</span></h3>
+          <p><span data-l="zh">先懂客戶的顧慮，才講得清楚地端 AI 的價值。</span><span data-l="en">You can only explain on-prem AI well once you understand the customer's concerns.</span><span data-l="ja">顧客の懸念を理解してこそ、オンプレミス AI の価値を伝えられる。</span></p>
+        </article>
+        <article class="card glass goal">
+          <div class="kicker"><span data-l="zh">三年後</span><span data-l="en">IN 3 YEARS</span><span data-l="ja">3年後</span></div>
+          <h3><span data-l="zh">成為日本市場開發團隊的一員</span><span data-l="en">Be part of the Japan market development team</span><span data-l="ja">日本市場開拓チームの一員になる</span></h3>
+          <p><span data-l="zh">用語言與客戶理解，把 MICH 帶進日本市場。</span><span data-l="en">Bring MICH to Japan through language and customer insight.</span><span data-l="ja">語学力と顧客理解で、MICH を日本市場へ。</span></p>
+        </article>
+      </div>
+      <div class="strip glass">
+        <span class="label"><span data-l="zh">怎麼走過去</span><span data-l="en">HOW I GET THERE</span><span data-l="ja">道のり</span></span>
+        <span class="step"><span data-l="zh">學 B2B 銷售流程</span><span data-l="en">Learn the B2B sales process</span><span data-l="ja">B2B 営業プロセスを学ぶ</span></span>
+        <span class="to" aria-hidden="true">→</span>
+        <span class="step"><span data-l="zh">直接接觸客戶</span><span data-l="en">Work directly with customers</span><span data-l="ja">顧客と直接向き合う</span></span>
+        <span class="to" aria-hidden="true">→</span>
+        <span class="step"><span data-l="zh">負責單一市場</span><span data-l="en">Own one market</span><span data-l="ja">一つの市場を担当</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" id="s-plan" data-title="前 90 天" data-title-en="First 90 days" data-title-ja="最初の90日">
+    <div class="wrap">
+      <span class="tag glass"><span data-l="zh">02 · 入職後</span><span data-l="en">02 · If I join</span><span data-l="ja">02 · 入社後</span></span>
+      <h2><span data-l="zh">前 90 天：先懂客戶，再做行銷</span><span data-l="en">First 90 days: customers first, then marketing</span><span data-l="ja">最初の90日：顧客理解から、マーケティングへ</span></h2>
+      <p class="lead"><span data-l="zh">以下為假設，會先與團隊確認目前的客戶與成效指標，再決定優先順序。</span><span data-l="en">A working hypothesis. I'd first confirm current customers and metrics with the team, then set priorities.</span><span data-l="ja">あくまで仮説です。まずチームと現在の顧客・指標を確認し、優先順位を決めます。</span></p>
+      <div class="grid c3">
+        <article class="card glass">
+          <div class="kicker">DAY 1–30</div>
+          <h3><span data-l="zh">懂客戶與目標</span><span data-l="en">Know customers and goals</span><span data-l="ja">顧客と目標を知る</span></h3>
+          <ul><li><span data-l="zh">了解現有客戶與銷售方式</span><span data-l="en">Learn current customers and how we sell</span><span data-l="ja">既存顧客と販売方法を把握</span></li><li><span data-l="zh">確認行銷要達成的效果</span><span data-l="en">Confirm what marketing should achieve</span><span data-l="ja">マーケティングの期待成果を確認</span></li></ul>
+        </article>
+        <article class="card glass">
+          <div class="kicker">DAY 31–60</div>
+          <h3><span data-l="zh">跟著業務跑</span><span data-l="en">Go out with sales</span><span data-l="ja">営業に同行する</span></h3>
+          <ul><li><span data-l="zh">爭取參與 B2B 業務拜訪</span><span data-l="en">Join B2B customer visits</span><span data-l="ja">B2B 商談への同行を志願</span></li><li><span data-l="zh">整理客戶常問的問題</span><span data-l="en">Collect customers' common questions</span><span data-l="ja">顧客のよくある質問を整理</span></li></ul>
+        </article>
+        <article class="card glass">
+          <div class="kicker">DAY 61–90</div>
+          <h3><span data-l="zh">變成行銷素材</span><span data-l="en">Turn it into marketing</span><span data-l="ja">マーケティング素材にする</span></h3>
+          <ul><li><span data-l="zh">把案例整理成可重複用的故事</span><span data-l="en">Shape cases into reusable stories</span><span data-l="ja">事例を再利用できるストーリーに</span></li><li><span data-l="zh">為資安、廠務、研發各寫一套說法</span><span data-l="en">Write a pitch for security, plant, and R&amp;D buyers</span><span data-l="ja">セキュリティ・工場・研究開発向けに訴求を作成</span></li></ul>
+        </article>
+      </div>
+      <div class="strip glass">
+        <span class="label"><span data-l="zh">怎麼看成效</span><span data-l="en">HOW I MEASURE</span><span data-l="ja">成果の測り方</span></span>
+        <span class="step"><span data-l="zh">曝光</span><span data-l="en">Reach</span><span data-l="ja">露出</span></span>
+        <span class="to" aria-hidden="true">→</span>
+        <span class="step"><span data-l="zh">互動</span><span data-l="en">Engagement</span><span data-l="ja">反応</span></span>
+        <span class="to" aria-hidden="true">→</span>
+        <span class="step"><span data-l="zh">轉換</span><span data-l="en">Conversion</span><span data-l="ja">転換</span></span>
+        <span class="note"><span data-l="zh">B2B 最看重 <b>lead 品質</b></span><span data-l="en">In B2B, <b>lead quality</b> matters most</span><span data-l="ja">B2B では<b>リードの質</b>を最重視</span></span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var htmlLang = { zh: "zh-Hant-TW", ja: "ja", en: "en" };
+    var buttons = document.querySelectorAll(".langs-switch button");
+
+    function setLang(lang) {
+      if (!htmlLang[lang]) return;
+      root.setAttribute("data-lang", lang);
+      root.setAttribute("lang", htmlLang[lang]);
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === lang)); });
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+      document.dispatchEvent(new Event("langchange"));
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { setLang(b.dataset.set); });
+    });
+
+    var fromUrl = new URLSearchParams(location.search).get("lang");
+    var saved = null;
+    try { saved = localStorage.getItem("lang"); } catch (e) {}
+    setLang(fromUrl || saved || "zh");
+  })();
+</script>
+<script>
+  (function () {
+    var deck = document.getElementById("deck");
+    var slides = Array.prototype.slice.call(deck.querySelectorAll(".slide"));
+    var dots = document.querySelector(".dots");
+    var cur = document.getElementById("cur");
+    document.getElementById("total").textContent = slides.length;
+    var index = 0;
+
+    function title(s) {
+      var lang = document.documentElement.getAttribute("data-lang") || "zh";
+      return (lang === "en" && s.dataset.titleEn) || (lang === "ja" && s.dataset.titleJa) || s.dataset.title;
+    }
+
+    slides.forEach(function (s) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + s.id;
+      li.appendChild(a);
+      dots.appendChild(li);
+    });
+    var dotLinks = dots.querySelectorAll("a");
+
+    function label() {
+      slides.forEach(function (s, i) {
+        dotLinks[i].title = title(s);
+        dotLinks[i].setAttribute("aria-label", title(s));
+      });
+    }
+    label();
+    document.addEventListener("langchange", label);
+
+    function go(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      slides[i].scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Track which slide is on screen
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        index = slides.indexOf(e.target);
+        cur.textContent = index + 1;
+        dotLinks.forEach(function (d, j) { d.setAttribute("aria-current", String(j === index)); });
+        history.replaceState(null, "", "#" + e.target.id);
+      });
+    }, { root: deck, rootMargin: "-50% 0px -50% 0px" });
+    slides.forEach(function (s) { io.observe(s); });
+
+    // In-page links scroll inside the deck
+    document.addEventListener("click", function (ev) {
+      var a = ev.target.closest('a[href^="#"]');
+      if (!a) return;
+      var t = document.getElementById(a.getAttribute("href").slice(1));
+      if (!t) return;
+      ev.preventDefault();
+      go(slides.indexOf(t));
+    });
+
+    // Presentation keys: one press = one slide; 1–9 jump
+    window.addEventListener("keydown", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      if (/^[1-9]$/.test(ev.key) && Number(ev.key) <= slides.length) { ev.preventDefault(); go(Number(ev.key) - 1); return; }
+      var next = ["ArrowDown", "PageDown", " ", "ArrowRight"];
+      var prev = ["ArrowUp", "PageUp", "ArrowLeft"];
+      if (next.indexOf(ev.key) >= 0) { ev.preventDefault(); go(index + (ev.shiftKey && ev.key === " " ? -1 : 1)); }
+      else if (prev.indexOf(ev.key) >= 0) { ev.preventDefault(); go(index - 1); }
+      else if (ev.key === "Home") { ev.preventDefault(); go(0); }
+      else if (ev.key === "End") { ev.preventDefault(); go(slides.length - 1); }
+    });
+
+    // Open at the slide in the URL, if any
+    var start = location.hash && document.getElementById(location.hash.slice(1));
+    if (start) deck.scrollTo({ top: start.offsetTop, behavior: "instant" });
+  })();
+</script>
+</body>
+</html>

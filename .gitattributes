@@ -1,0 +1,3 @@
+# Strip the local AI-memory block (private, auto-generated) from these files on commit
+/CLAUDE.md filter=strip-ai-memory
+/AGENTS.md filter=strip-ai-memory
