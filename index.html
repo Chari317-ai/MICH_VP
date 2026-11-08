@@ -106,24 +106,21 @@
   h2 mark { background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lead { color: var(--muted); margin: 0; font-size: 1.05em; }
 
-  /* Slide 1: the goal, big type on the left and a giant JP on the right */
-  .goal { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
-  .goal h2 { font-size: clamp(2.6rem, 5.6vw, 5.4rem); line-height: 1.12; margin: 22px 0 22px; }
-  .goal .lead { max-width: 30em; line-height: 1.7; }
-  .big-num {
-    font-size: clamp(9rem, 22vw, 21rem); line-height: .8; font-weight: 900; letter-spacing: -.05em; justify-self: end; width: fit-content; padding-right: .04em;
-    background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .note { margin-top: 26px; padding: 12px 18px; border-radius: 14px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(14px); color: var(--ink); font-size: .9em; line-height: 1.6; align-self: flex-start; }
+  /* Slide 1: the goal, one sentence and nothing else */
+  .goal { text-align: center; }
+  .goal .pre { font-size: clamp(1.4rem, 2.6vw, 2.2rem); color: var(--muted); font-weight: 500; margin: 0; }
+  .goal h2 { font-size: clamp(2.8rem, 7vw, 6.6rem); line-height: 1.15; margin: 18px 0 0; }
+  .goal h2 mark { display: inline-block; padding: 0 .04em; }
 
-  /* Slide 2: three steps side by side, coloured blue → green → yellow */
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
-  .step-card { padding: 28px 28px 30px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
-  .step-card .n { display: block; font-size: 2.6em; font-weight: 900; line-height: 1; letter-spacing: -.03em; color: var(--me-ink); font-variant-numeric: tabular-nums; }
+  /* Slide 2: the question, then three short steps coloured blue → green → yellow */
+  .how h2 { font-size: clamp(2.2rem, 4.6vw, 4.2rem); margin: 0; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; }
+  .step-card { padding: 30px 30px 34px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
+  .step-card .n { display: block; font-size: 4em; font-weight: 900; line-height: 1; color: var(--me-ink); font-variant-numeric: tabular-nums; }
   .step-card:nth-child(2) .n { color: var(--blend-ink); }
   .step-card:nth-child(3) .n { color: var(--mich-ink); }
-  .step-card h3 { margin: 18px 0 10px; font-size: 1.3em; }
-  .step-card p { margin: 0; color: var(--muted); font-size: .95em; line-height: 1.75; }
+  .step-card h3 { margin: 20px 0 8px; font-size: 1.45em; }
+  .step-card p { margin: 0; color: var(--muted); font-size: 1em; line-height: 1.6; }
 
 
   /* Phones: stack the slides and scroll normally */
@@ -136,8 +133,6 @@
     .who em { display: none; }
     .aura .me { left: -30vmax; top: 0; }
     .aura .mich { left: calc(100vw - 32vmax); top: 40vh; }
-    .goal { grid-template-columns: 1fr; }
-    .big-num { justify-self: start; order: -1; }
     .steps { grid-template-columns: 1fr; }
   }
 </style>
@@ -157,38 +152,30 @@
 
 <main class="track" id="track">
 
-  <section class="slide" id="s-goal" aria-label="Goal">
-    <div class="goal">
-      <div>
-        <div class="eyebrow"><span data-l="zh">01 · 想要達到的目標</span><span data-l="en">01 · The goal</span><span data-l="ja">01 · 目指すゴール</span></div>
-        <h2><span data-l="zh">讓 MICH<br><mark>打進日本市場</mark></span><span data-l="en">Bring MICH<br><mark>into Japan</mark></span><span data-l="ja">MICH を<br><mark>日本市場へ</mark></span></h2>
-        <p class="lead"><span data-l="zh">這也是我三年後想站的位置：成為日本市場開發團隊的一員。</span><span data-l="en">It's also where I want to be in three years: part of the Japan market development team.</span><span data-l="ja">これは3年後の私の目標でもあります：日本市場開拓チームの一員になること。</span></p>
-      </div>
-      <div class="big-num" aria-hidden="true">JP</div>
-    </div>
+  <section class="slide goal" id="s-goal" aria-label="Goal">
+    <p class="pre"><span data-l="zh">我的目標是…</span><span data-l="en">My goal is…</span><span data-l="ja">私の目標は…</span></p>
+    <h2><span data-l="zh"><mark>把 MICH 帶進日本市場</mark></span><span data-l="en"><mark>to bring MICH into Japan</mark></span><span data-l="ja"><mark>MICH を日本市場へ</mark></span></h2>
   </section>
 
-  <section class="slide" id="s-how" aria-label="How">
-    <div class="eyebrow"><span data-l="zh">02 · 如何做到</span><span data-l="en">02 · How</span><span data-l="ja">02 · 実現の方法</span></div>
-    <h2><span data-l="zh">三個切入點</span><span data-l="en">Three ways in</span><span data-l="ja">3つの切り口</span></h2>
+  <section class="slide how" id="s-how" aria-label="How">
+    <h2><span data-l="zh">如何做到…</span><span data-l="en">How I'll get there…</span><span data-l="ja">どう実現するか…</span></h2>
     <div class="steps">
       <article class="step-card">
-        <span class="n">01</span>
+        <span class="n">1</span>
         <h3><span data-l="zh">說好品牌故事</span><span data-l="en">Tell the brand story</span><span data-l="ja">ブランドストーリーを伝える</span></h3>
-        <p><span data-l="zh">在 LinkedIn 與官網補充品牌故事和創辦人理念；成交後，邀請客戶在社群發佈或轉發 MICH 的消息。</span><span data-l="en">Add brand stories and the founder's vision to LinkedIn and the website. After each deal, invite customers to post or share MICH news on social media.</span><span data-l="ja">LinkedIn と公式サイトにブランドストーリーと創業者の理念を追加。成約後は顧客に SNS で MICH の情報を発信・シェアしてもらう。</span></p>
+        <p><span data-l="zh">LinkedIn、官網、客戶轉發</span><span data-l="en">LinkedIn, website, customer shares</span><span data-l="ja">LinkedIn・公式サイト・顧客のシェア</span></p>
       </article>
       <article class="step-card">
-        <span class="n">02</span>
+        <span class="n">2</span>
         <h3><span data-l="zh">找到突破口</span><span data-l="en">Find the entry point</span><span data-l="ja">突破口を見つける</span></h3>
-        <p><span data-l="zh">調查在日本的台灣企業與西方企業，作為打進日本市場的第一步，提高 MICH 在日本的曝光。</span><span data-l="en">Research Taiwanese and Western companies operating in Japan as the first way in, raising MICH's visibility there.</span><span data-l="ja">日本に拠点を持つ台湾企業や欧米企業を調査し、日本市場への足がかりとして MICH の認知度を高める。</span></p>
+        <p><span data-l="zh">從在日的台灣與西方企業切入</span><span data-l="en">Start with Taiwanese and Western firms in Japan</span><span data-l="ja">在日の台湾企業・欧米企業から</span></p>
       </article>
       <article class="step-card">
-        <span class="n">03</span>
-        <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask customers for referrals</span><span data-l="ja">既存顧客から紹介を得る</span></h3>
-        <p><span data-l="zh">聯繫現有客戶，請他們引薦日本其他需要 MICH 產品的企業。</span><span data-l="en">Reach out to current customers and ask them to introduce other companies in Japan that need MICH.</span><span data-l="ja">既存顧客に連絡し、MICH を必要とする日本の他企業を紹介してもらう。</span></p>
+        <span class="n">3</span>
+        <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask for referrals</span><span data-l="ja">既存顧客からの紹介</span></h3>
+        <p><span data-l="zh">介紹日本其他需要 MICH 的企業</span><span data-l="en">Introductions to companies in Japan that need MICH</span><span data-l="ja">MICH を必要とする日本企業を紹介してもらう</span></p>
       </article>
     </div>
-    <div class="note"><span data-l="zh">以上為初步構想，會先與團隊確認現況再調整。</span><span data-l="en">An initial idea. I'd confirm the current situation with the team first, then adjust.</span><span data-l="ja">初期案です。まずチームと現状を確認し、調整します。</span></div>
   </section>
 
 </main>
