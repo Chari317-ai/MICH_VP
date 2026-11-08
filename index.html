@@ -9,18 +9,19 @@
 <title>蔡承佑 × MICH｜VP 面談</title>
 <style>
   :root {
-    --bg: #f7f5f1;
+    --bg: #fbfbfd;
     --surface: rgba(255, 255, 255, .55);
     --line: rgba(30, 34, 48, .12);
     --ink: #1e2230;
     --muted: #6b6f7d;
-    --me: #5b8fd9;          /* blue: me */
-    --mich: #edc04a;        /* yellow: MICH */
-    --blend: #74b3a0;       /* where the two meet: blue + yellow */
-    --me-ink: #3f74c4;      /* darker shades for text, so it stays readable on the light background */
-    --mich-ink: #b5850f;
+    /* red, white and blue: the colours Taiwan, Japan and the US share */
+    --me: #4a7fd6;          /* blue */
+    --mich: #e0605a;        /* red */
+    --blend: #9b7bc0;       /* where the two meet: blue + red */
+    --me-ink: #2f63b8;      /* darker shades for text, so it stays readable on the light background */
+    --mich-ink: #c23b35;
     --shu: #c8432f;         /* vermilion, for the Japanese-style goal slide */
-    --blend-ink: #3f9583;
+    --blend-ink: #7a56a8;
     --duo: linear-gradient(90deg, var(--me), var(--blend), var(--mich));
     --duo-ink: linear-gradient(90deg, var(--me-ink), var(--blend-ink), var(--mich-ink));
     --pad-x: clamp(24px, 5vw, 88px);
@@ -48,9 +49,9 @@
     filter: blur(70px); opacity: .55; mix-blend-mode: multiply;
     transition: left 1.6s cubic-bezier(.5, 0, .2, 1), top 1.6s cubic-bezier(.5, 0, .2, 1), opacity 1.6s;
   }
-  .aura .me   { background: radial-gradient(circle, var(--me) 0%, rgba(91, 143, 217, 0) 68%); left: -24vmax; top: 10vh; animation: drift-a 14s ease-in-out infinite alternate; }
-  .aura .mich { background: radial-gradient(circle, var(--mich) 0%, rgba(237, 192, 74, 0) 68%); left: calc(100vw - 38vmax); top: -18vh; animation: drift-b 17s ease-in-out infinite alternate; }
-  .aura .meet { background: radial-gradient(circle, var(--blend) 0%, rgba(116, 179, 160, 0) 65%); width: 40vmax; height: 40vmax; left: calc(50vw - 20vmax); top: calc(50vh - 20vmax); opacity: 0; }
+  .aura .me   { background: radial-gradient(circle, var(--me) 0%, rgba(74, 127, 214, 0) 68%); left: -24vmax; top: 10vh; animation: drift-a 14s ease-in-out infinite alternate; }
+  .aura .mich { background: radial-gradient(circle, var(--mich) 0%, rgba(224, 96, 90, 0) 68%); left: calc(100vw - 38vmax); top: -18vh; animation: drift-b 17s ease-in-out infinite alternate; }
+  .aura .meet { background: radial-gradient(circle, var(--blend) 0%, rgba(155, 123, 192, 0) 65%); width: 40vmax; height: 40vmax; left: calc(50vw - 20vmax); top: calc(50vh - 20vmax); opacity: 0; }
   :root[data-step="2"] .aura .me   { left: calc(50vw - 46vmax); top: 4vh; }
   :root[data-step="2"] .aura .mich { left: calc(50vw - 16vmax); top: -4vh; }
   :root[data-step="2"] .aura .meet { opacity: .35; }
@@ -160,7 +161,7 @@
   /* Phones: stack the slides and scroll normally */
   @media (max-width: 820px) {
     body { overflow: auto; }
-    .top { position: sticky; height: 60px; background: rgba(247, 245, 241, .7); backdrop-filter: blur(12px); }
+    .top { position: sticky; height: 60px; background: rgba(251, 251, 253, .7); backdrop-filter: blur(12px); }
     .bottom { display: none; }
     .track { flex-direction: column; height: auto; transform: none !important; }
     .slide { flex: none; height: auto; padding: 40px 20px 56px; }
