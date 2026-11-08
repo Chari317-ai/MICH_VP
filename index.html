@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
 <title>蔡承佑 × MICH｜VP 面談</title>
 <style>
   :root {
@@ -16,6 +19,7 @@
     --blend: #74b3a0;       /* where the two meet: blue + yellow */
     --me-ink: #3f74c4;      /* darker shades for text, so it stays readable on the light background */
     --mich-ink: #b5850f;
+    --shu: #c8432f;         /* vermilion, for the Japanese-style goal slide */
     --blend-ink: #3f9583;
     --duo: linear-gradient(90deg, var(--me), var(--blend), var(--mich));
     --duo-ink: linear-gradient(90deg, var(--me-ink), var(--blend-ink), var(--mich-ink));
@@ -106,16 +110,46 @@
   h2 mark { background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lead { color: var(--muted); margin: 0; font-size: 1.05em; }
 
-  /* Slide 1: the goal, one sentence and nothing else */
-  .goal { text-align: center; }
-  .goal .pre { font-size: clamp(1.4rem, 2.6vw, 2.2rem); color: var(--muted); font-weight: 500; margin: 0; }
-  .goal h2 { font-size: clamp(2.8rem, 7vw, 6.6rem); line-height: 1.15; margin: 18px 0 0; }
-  .goal h2 mark { display: inline-block; padding: 0 .04em; }
+  /* Slide 1: the goal, one sentence and nothing else, dressed in a Japanese (wafuu) style:
+     Mincho serif, a pale vermilion sun behind the words, a seal stamp, and vertical text at the edge */
+  .goal { text-align: center; position: relative; }
+  .goal .sun {
+    position: absolute; left: 50%; top: 50%; z-index: -1;
+    width: min(58vh, 46vw); aspect-ratio: 1; border-radius: 50%;
+    transform: translate(-50%, -46%); background: var(--shu); opacity: .1;
+  }
+  .goal .pre, .goal h2, .goal .tate { font-family: "Noto Serif TC", "Noto Serif JP", "Hiragino Mincho ProN", "Songti TC", serif; }
+  :root[data-lang="ja"] .goal .pre, :root[data-lang="ja"] .goal h2, .goal .tate { font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif; }
+  .goal .pre { font-size: clamp(1.4rem, 2.6vw, 2.2rem); color: var(--muted); font-weight: 600; margin: 0; letter-spacing: .12em; }
+  .goal h2 { font-size: clamp(2.8rem, 7vw, 6.6rem); line-height: 1.2; margin: 18px 0 0; font-weight: 900; letter-spacing: .04em; }
+  .goal h2 mark { background: none; color: var(--shu); -webkit-text-fill-color: var(--shu); }
+  .goal .hanko {
+    display: inline-flex; align-items: center; justify-content: center; vertical-align: .9em;
+    width: 1.5em; height: 1.5em; margin-left: .3em; border-radius: .14em;
+    background: var(--shu); color: #fff; font-size: .4em; line-height: 1; letter-spacing: 0;
+    transform: rotate(-6deg); box-shadow: inset 0 0 0 .08em rgba(255, 255, 255, .4);
+  }
+  .goal .tate {
+    position: absolute; left: var(--pad-x); top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 18px;
+    font-size: 1.05rem; letter-spacing: .5em; color: var(--muted); font-weight: 600;
+  }
+  .goal .tate::before { content: ""; width: 1px; height: 64px; background: var(--shu); }
+  .goal .tate span { writing-mode: vertical-rl; }
 
-  /* Slide 2: the question, then three short steps coloured blue → green → yellow */
+  /* Slide 2: the question, then three short steps coloured blue → green → yellow.
+     The cards rise in one after another each time slide 2 comes on screen. */
   .how h2 { font-size: clamp(2.2rem, 4.6vw, 4.2rem); margin: 0; }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; }
-  .step-card { padding: 30px 30px 34px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
+  .step-card {
+    padding: 30px 30px 34px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08);
+    opacity: 0; transform: translateY(70px);
+    transition: opacity .2s, transform .2s;
+  }
+  :root[data-step="2"] .step-card { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: .45s; }
+  :root[data-step="2"] .step-card:nth-child(2) { transition-delay: .65s; }
+  :root[data-step="2"] .step-card:nth-child(3) { transition-delay: .85s; }
+  @media (prefers-reduced-motion: reduce) { .step-card { opacity: 1; transform: none; } }
   .step-card .n { display: block; font-size: 4em; font-weight: 900; line-height: 1; color: var(--me-ink); font-variant-numeric: tabular-nums; }
   .step-card:nth-child(2) .n { color: var(--blend-ink); }
   .step-card:nth-child(3) .n { color: var(--mich-ink); }
@@ -134,6 +168,9 @@
     .aura .me { left: -30vmax; top: 0; }
     .aura .mich { left: calc(100vw - 32vmax); top: 40vh; }
     .steps { grid-template-columns: 1fr; }
+    .step-card { opacity: 1; transform: none; }
+    .goal .tate { display: none; }
+    .goal .sun { width: 80vw; }
   }
 </style>
 </head>
@@ -153,8 +190,10 @@
 <main class="track" id="track">
 
   <section class="slide goal" id="s-goal" aria-label="Goal">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="tate" aria-hidden="true"><span>日本市場へ、一歩ずつ。</span></div>
     <p class="pre"><span data-l="zh">我的目標是…</span><span data-l="en">My goal is…</span><span data-l="ja">私の目標は…</span></p>
-    <h2><span data-l="zh"><mark>把 MICH 帶進日本市場</mark></span><span data-l="en"><mark>to bring MICH into Japan</mark></span><span data-l="ja"><mark>MICH を日本市場へ</mark></span></h2>
+    <h2><span data-l="zh">把 MICH 帶進<mark>日本市場</mark></span><span data-l="en">to bring MICH into <mark>Japan</mark></span><span data-l="ja">MICH を<mark>日本市場</mark>へ</span><span class="hanko" aria-hidden="true">進</span></h2>
   </section>
 
   <section class="slide how" id="s-how" aria-label="How">
