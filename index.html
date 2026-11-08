@@ -106,48 +106,24 @@
   h2 mark { background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lead { color: var(--muted); margin: 0; font-size: 1.05em; }
 
-  /* Slide 1: timeline across the full width, warm (me) flowing into cool (MICH) */
-  .timeline { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; }
-  .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 34px; height: 2px; border-radius: 2px; background: var(--duo); opacity: .7; }
-  .stop { position: relative; padding-right: 48px; }
-  .stop .when { font-size: .75em; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; height: 22px; font-weight: 600; }
-  .stop .dot { position: relative; width: 16px; height: 16px; border-radius: 50%; margin: 4px 0 26px; background: var(--bg); border: 3px solid var(--me); }
-  .stop:nth-child(2) .dot { border-color: var(--blend); }
-  .stop h3 { font-size: 1.35em; line-height: 1.4; margin: 0 0 10px; }
-  .stop p { margin: 0; color: var(--muted); line-height: 1.7; font-size: .95em; }
-  .stop.goal .dot { border: 0; background: var(--duo); box-shadow: 0 0 0 7px rgba(237, 192, 74, .22), 0 0 24px rgba(237, 192, 74, .6); }
-  .stop.goal h3 { font-size: 1.6em; background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
-
-  .route { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 0; margin-top: 52px; padding: 14px 24px; border-radius: 999px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(14px); align-self: flex-start; }
-  .route .label { font-size: .75em; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; margin-right: 28px; font-weight: 600; }
-  .route ol { display: flex; flex-wrap: wrap; gap: 12px 36px; list-style: none; margin: 0; padding: 0; counter-reset: r; }
-  .route li { counter-increment: r; display: flex; align-items: center; gap: 10px; font-weight: 600; }
-  .route li::before {
-    content: counter(r, decimal-leading-zero); font-size: .72em; color: #fff; border-radius: 999px; padding: 3px 8px;
-    font-variant-numeric: tabular-nums; background: var(--blend);
-  }
-  .route li:first-child::before { background: var(--me); }
-  .route li:last-child::before { background: var(--mich); color: var(--ink); }
-
-  /* Slide 2: big number on the left, schedule on the right */
-  .split { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 5vw, 88px); align-items: center; }
+  /* Slide 1: the goal, big type on the left and a giant JP on the right */
+  .goal { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .goal h2 { font-size: clamp(2.6rem, 5.6vw, 5.4rem); line-height: 1.12; margin: 22px 0 22px; }
+  .goal .lead { max-width: 30em; line-height: 1.7; }
   .big-num {
-    font-size: clamp(7rem, 16vw, 15rem); line-height: .85; font-weight: 900; letter-spacing: -.05em; margin: 8px 0 4px;
+    font-size: clamp(9rem, 22vw, 21rem); line-height: .8; font-weight: 900; letter-spacing: -.05em; justify-self: end; width: fit-content; padding-right: .04em;
     background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .big-num small { font-size: .22em; letter-spacing: 0; margin-left: 10px; font-weight: 700; color: var(--mich-ink); -webkit-text-fill-color: var(--mich-ink); }
-  .note { margin-top: 18px; padding: 12px 18px; border-radius: 14px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(14px); color: var(--ink); font-size: .9em; line-height: 1.6; }
+  .note { margin-top: 26px; padding: 12px 18px; border-radius: 14px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(14px); color: var(--ink); font-size: .9em; line-height: 1.6; align-self: flex-start; }
 
-  .schedule { padding: 6px 26px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
-  .row { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 22px 0; }
-  .row + .row { border-top: 1px solid var(--line); }
-  .row .days { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.3em; color: var(--me-ink); }
-  .row:nth-child(2) .days { color: var(--blend-ink); }
-  .row:nth-child(3) .days { color: var(--mich-ink); }
-  .row h3 { margin: 0 0 6px; font-size: 1.2em; }
-  .row ul { margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: .95em; line-height: 1.7; }
-  .row li::before { content: "· "; color: var(--blend); font-weight: 700; }
-  .row p { margin: 0; color: var(--muted); font-size: .95em; line-height: 1.7; }
+  /* Slide 2: three steps side by side, coloured blue → green → yellow */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+  .step-card { padding: 28px 28px 30px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
+  .step-card .n { display: block; font-size: 2.6em; font-weight: 900; line-height: 1; letter-spacing: -.03em; color: var(--me-ink); font-variant-numeric: tabular-nums; }
+  .step-card:nth-child(2) .n { color: var(--blend-ink); }
+  .step-card:nth-child(3) .n { color: var(--mich-ink); }
+  .step-card h3 { margin: 18px 0 10px; font-size: 1.3em; }
+  .step-card p { margin: 0; color: var(--muted); font-size: .95em; line-height: 1.75; }
 
 
   /* Phones: stack the slides and scroll normally */
@@ -160,15 +136,9 @@
     .who em { display: none; }
     .aura .me { left: -30vmax; top: 0; }
     .aura .mich { left: calc(100vw - 32vmax); top: 40vh; }
-    .timeline { grid-template-columns: 1fr; gap: 28px; margin-top: 36px; padding-left: 28px; }
-    .timeline::before { left: 7px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(var(--me), var(--blend), var(--mich)); }
-    .stop { padding-right: 0; }
-    .stop .dot { position: absolute; left: -28px; top: 2px; margin: 0; }
-    .route { border-radius: 20px; }
-    .route .label { width: 100%; }
-    .split { grid-template-columns: 1fr; gap: 24px; }
-    .schedule { padding: 6px 18px; }
-    .row { grid-template-columns: 1fr; gap: 6px; }
+    .goal { grid-template-columns: 1fr; }
+    .big-num { justify-self: start; order: -1; }
+    .steps { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -187,75 +157,38 @@
 
 <main class="track" id="track">
 
-  <section class="slide" id="s-career" aria-label="Career plan">
-    <div class="eyebrow"><span data-l="zh">01 · 職涯發展規劃</span><span data-l="en">01 · Career plan</span><span data-l="ja">01 · キャリアプラン</span></div>
-    <h2><span data-l="zh">先懂客戶，<mark>再用產品解決問題</mark></span><span data-l="en">Understand the customer, <mark>then solve it with the product</mark></span><span data-l="ja">まず顧客を理解し、<mark>製品で課題を解決する</mark></span></h2>
-    <p class="lead"><span data-l="zh">這是我選行銷的原因，也是我想走的路。</span><span data-l="en">It's why I chose marketing, and where I want to go.</span><span data-l="ja">マーケティングを選んだ理由であり、目指す道です。</span></p>
-
-    <div class="timeline">
-      <div class="stop">
-        <div class="when"><span data-l="zh">起點 · 為什麼是行銷</span><span data-l="en">Start · Why marketing</span><span data-l="ja">原点 · なぜマーケティングか</span></div>
-        <div class="dot"></div>
-        <h3><span data-l="zh">喜歡了解客戶的需求與預算</span><span data-l="en">I like learning what customers need and can spend</span><span data-l="ja">顧客のニーズと予算を知るのが好き</span></h3>
-        <p><span data-l="zh">透過交流，用自家產品幫他們解決問題；我也喜歡跟人溝通。</span><span data-l="en">Through conversation, I help them solve problems with our product. And I enjoy talking with people.</span><span data-l="ja">対話を通じて自社製品で課題を解決したい。人とのコミュニケーションも好きです。</span></p>
+  <section class="slide" id="s-goal" aria-label="Goal">
+    <div class="goal">
+      <div>
+        <div class="eyebrow"><span data-l="zh">01 · 想要達到的目標</span><span data-l="en">01 · The goal</span><span data-l="ja">01 · 目指すゴール</span></div>
+        <h2><span data-l="zh">讓 MICH<br><mark>打進日本市場</mark></span><span data-l="en">Bring MICH<br><mark>into Japan</mark></span><span data-l="ja">MICH を<br><mark>日本市場へ</mark></span></h2>
+        <p class="lead"><span data-l="zh">這也是我三年後想站的位置：成為日本市場開發團隊的一員。</span><span data-l="en">It's also where I want to be in three years: part of the Japan market development team.</span><span data-l="ja">これは3年後の私の目標でもあります：日本市場開拓チームの一員になること。</span></p>
       </div>
-      <div class="stop">
-        <div class="when"><span data-l="zh">現在 · 為什麼是 MICH</span><span data-l="en">Now · Why MICH</span><span data-l="ja">現在 · なぜ MICH か</span></div>
-        <div class="dot"></div>
-        <h3><span data-l="zh">企業想用 AI，但資料要留在自己的機房</span><span data-l="en">Companies want AI, but their data must stay in-house</span><span data-l="ja">AI は使いたいが、データは自社に置きたい</span></h3>
-        <p><span data-l="zh">先懂客戶的顧慮，才講得清楚地端 AI 的價值。</span><span data-l="en">You can only explain on-prem AI well once you understand the customer's concerns.</span><span data-l="ja">顧客の懸念を理解してこそ、オンプレミス AI の価値を伝えられる。</span></p>
-      </div>
-      <div class="stop goal">
-        <div class="when"><span data-l="zh">三年後</span><span data-l="en">In 3 years</span><span data-l="ja">3年後</span></div>
-        <div class="dot"></div>
-        <h3><span data-l="zh">成為日本市場開發團隊的一員</span><span data-l="en">Be part of the Japan market development team</span><span data-l="ja">日本市場開拓チームの一員になる</span></h3>
-        <p><span data-l="zh">用語言與客戶理解，把 MICH 帶進日本市場。</span><span data-l="en">Bring MICH to Japan through language and customer insight.</span><span data-l="ja">語学力と顧客理解で、MICH を日本市場へ。</span></p>
-      </div>
-    </div>
-
-    <div class="route">
-      <span class="label"><span data-l="zh">怎麼走過去</span><span data-l="en">How I get there</span><span data-l="ja">道のり</span></span>
-      <ol>
-        <li><span data-l="zh">學 B2B 銷售流程</span><span data-l="en">Learn the B2B sales process</span><span data-l="ja">B2B 営業プロセスを学ぶ</span></li>
-        <li><span data-l="zh">直接接觸客戶</span><span data-l="en">Work directly with customers</span><span data-l="ja">顧客と直接向き合う</span></li>
-        <li><span data-l="zh">負責單一市場</span><span data-l="en">Own one market</span><span data-l="ja">一つの市場を担当</span></li>
-      </ol>
+      <div class="big-num" aria-hidden="true">JP</div>
     </div>
   </section>
 
-  <section class="slide" id="s-japan" aria-label="Japan market">
-    <div class="split">
-      <div>
-        <div class="eyebrow"><span data-l="zh">02 · 入職後</span><span data-l="en">02 · If I join</span><span data-l="ja">02 · 入社後</span></div>
-        <div class="big-num" aria-hidden="true">JP</div>
-        <h2><span data-l="zh">讓 MICH<br><mark>打進日本市場</mark></span><span data-l="en">Bring MICH <mark>into Japan</mark></span><span data-l="ja">MICH を<mark>日本市場へ</mark></span></h2>
-        <div class="note"><span data-l="zh">以下為初步構想，會先與團隊確認現況再調整。</span><span data-l="en">An initial idea. I'd confirm the current situation with the team first, then adjust.</span><span data-l="ja">初期案です。まずチームと現状を確認し、調整します。</span></div>
-      </div>
-
-      <div class="schedule">
-        <div class="row">
-          <div class="days">01</div>
-          <div>
-            <h3><span data-l="zh">說好品牌故事</span><span data-l="en">Tell the brand story</span><span data-l="ja">ブランドストーリーを伝える</span></h3>
-            <p><span data-l="zh">在 LinkedIn 與官網補充品牌故事和創辦人理念；成交後，邀請客戶在社群發佈或轉發 MICH 的消息。</span><span data-l="en">Add brand stories and the founder's vision to LinkedIn and the website. After each deal, invite customers to post or share MICH news on social media.</span><span data-l="ja">LinkedIn と公式サイトにブランドストーリーと創業者の理念を追加。成約後は顧客に SNS で MICH の情報を発信・シェアしてもらう。</span></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="days">02</div>
-          <div>
-            <h3><span data-l="zh">找到突破口</span><span data-l="en">Find the entry point</span><span data-l="ja">突破口を見つける</span></h3>
-            <p><span data-l="zh">調查在日本的台灣企業與西方企業，作為打進日本市場的第一步，提高 MICH 在日本的曝光。</span><span data-l="en">Research Taiwanese and Western companies operating in Japan as the first way in, raising MICH's visibility there.</span><span data-l="ja">日本に拠点を持つ台湾企業や欧米企業を調査し、日本市場への足がかりとして MICH の認知度を高める。</span></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="days">03</div>
-          <div>
-            <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask customers for referrals</span><span data-l="ja">既存顧客から紹介を得る</span></h3>
-            <p><span data-l="zh">聯繫現有客戶，請他們引薦日本其他需要 MICH 產品的企業。</span><span data-l="en">Reach out to current customers and ask them to introduce other companies in Japan that need MICH.</span><span data-l="ja">既存顧客に連絡し、MICH を必要とする日本の他企業を紹介してもらう。</span></p>
-          </div>
-        </div>
-      </div>
+  <section class="slide" id="s-how" aria-label="How">
+    <div class="eyebrow"><span data-l="zh">02 · 如何做到</span><span data-l="en">02 · How</span><span data-l="ja">02 · 実現の方法</span></div>
+    <h2><span data-l="zh">三個切入點</span><span data-l="en">Three ways in</span><span data-l="ja">3つの切り口</span></h2>
+    <div class="steps">
+      <article class="step-card">
+        <span class="n">01</span>
+        <h3><span data-l="zh">說好品牌故事</span><span data-l="en">Tell the brand story</span><span data-l="ja">ブランドストーリーを伝える</span></h3>
+        <p><span data-l="zh">在 LinkedIn 與官網補充品牌故事和創辦人理念；成交後，邀請客戶在社群發佈或轉發 MICH 的消息。</span><span data-l="en">Add brand stories and the founder's vision to LinkedIn and the website. After each deal, invite customers to post or share MICH news on social media.</span><span data-l="ja">LinkedIn と公式サイトにブランドストーリーと創業者の理念を追加。成約後は顧客に SNS で MICH の情報を発信・シェアしてもらう。</span></p>
+      </article>
+      <article class="step-card">
+        <span class="n">02</span>
+        <h3><span data-l="zh">找到突破口</span><span data-l="en">Find the entry point</span><span data-l="ja">突破口を見つける</span></h3>
+        <p><span data-l="zh">調查在日本的台灣企業與西方企業，作為打進日本市場的第一步，提高 MICH 在日本的曝光。</span><span data-l="en">Research Taiwanese and Western companies operating in Japan as the first way in, raising MICH's visibility there.</span><span data-l="ja">日本に拠点を持つ台湾企業や欧米企業を調査し、日本市場への足がかりとして MICH の認知度を高める。</span></p>
+      </article>
+      <article class="step-card">
+        <span class="n">03</span>
+        <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask customers for referrals</span><span data-l="ja">既存顧客から紹介を得る</span></h3>
+        <p><span data-l="zh">聯繫現有客戶，請他們引薦日本其他需要 MICH 產品的企業。</span><span data-l="en">Reach out to current customers and ask them to introduce other companies in Japan that need MICH.</span><span data-l="ja">既存顧客に連絡し、MICH を必要とする日本の他企業を紹介してもらう。</span></p>
+      </article>
     </div>
+    <div class="note"><span data-l="zh">以上為初步構想，會先與團隊確認現況再調整。</span><span data-l="en">An initial idea. I'd confirm the current situation with the team first, then adjust.</span><span data-l="ja">初期案です。まずチームと現状を確認し、調整します。</span></div>
   </section>
 
 </main>
