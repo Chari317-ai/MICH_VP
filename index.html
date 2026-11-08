@@ -139,24 +139,16 @@
   .note { margin-top: 18px; padding: 12px 18px; border-radius: 14px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(14px); color: var(--ink); font-size: .9em; line-height: 1.6; }
 
   .schedule { padding: 6px 26px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08); }
-  .row { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 14px 0; }
+  .row { display: grid; grid-template-columns: 56px 1fr; gap: 20px; padding: 22px 0; }
   .row + .row { border-top: 1px solid var(--line); }
-  .row .days { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .9em; padding-top: 4px; color: var(--me-ink); }
+  .row .days { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 1.3em; color: var(--me-ink); }
   .row:nth-child(2) .days { color: var(--blend-ink); }
   .row:nth-child(3) .days { color: var(--mich-ink); }
   .row h3 { margin: 0 0 6px; font-size: 1.2em; }
   .row ul { margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: .95em; line-height: 1.7; }
   .row li::before { content: "· "; color: var(--blend); font-weight: 700; }
+  .row p { margin: 0; color: var(--muted); font-size: .95em; line-height: 1.7; }
 
-  .funnel { margin-top: 20px; }
-  .funnel .label { font-size: .75em; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
-  .bars { display: grid; gap: 6px; }
-  .bar { height: 26px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; font-size: .85em; font-weight: 600; color: #fff; }
-  .bar:nth-child(1) { width: 100%; background: var(--me); opacity: .75; }
-  .bar:nth-child(2) { width: 72%; background: var(--blend); opacity: .85; }
-  .bar:nth-child(3) { width: 44%; background: var(--mich); color: var(--ink); }
-  .funnel .caption { margin-top: 10px; font-size: .88em; color: var(--muted); }
-  .funnel .caption b { color: var(--mich-ink); }
 
   /* Phones: stack the slides and scroll normally */
   @media (max-width: 820px) {
@@ -231,48 +223,36 @@
     </div>
   </section>
 
-  <section class="slide" id="s-plan" aria-label="First 90 days">
+  <section class="slide" id="s-japan" aria-label="Japan market">
     <div class="split">
       <div>
         <div class="eyebrow"><span data-l="zh">02 · 入職後</span><span data-l="en">02 · If I join</span><span data-l="ja">02 · 入社後</span></div>
-        <div class="big-num" aria-hidden="true">90<small><span data-l="zh">天</span><span data-l="en">days</span><span data-l="ja">日</span></small></div>
-        <h2><span data-l="zh">先懂客戶，<mark>再做行銷</mark></span><span data-l="en">Customers first, <mark>then marketing</mark></span><span data-l="ja">顧客理解から、<mark>マーケティングへ</mark></span></h2>
-        <div class="note"><span data-l="zh">以下為假設。會先與團隊確認目前的客戶與成效指標，再決定優先順序。</span><span data-l="en">A working hypothesis. I'd first confirm current customers and metrics with the team, then set priorities.</span><span data-l="ja">あくまで仮説です。まずチームと現在の顧客・指標を確認し、優先順位を決めます。</span></div>
+        <div class="big-num" aria-hidden="true">JP</div>
+        <h2><span data-l="zh">讓 MICH<br><mark>打進日本市場</mark></span><span data-l="en">Bring MICH <mark>into Japan</mark></span><span data-l="ja">MICH を<mark>日本市場へ</mark></span></h2>
+        <div class="note"><span data-l="zh">以下為初步構想，會先與團隊確認現況再調整。</span><span data-l="en">An initial idea. I'd confirm the current situation with the team first, then adjust.</span><span data-l="ja">初期案です。まずチームと現状を確認し、調整します。</span></div>
       </div>
 
-      <div>
-        <div class="schedule">
-          <div class="row">
-            <div class="days">DAY 1–30</div>
-            <div>
-              <h3><span data-l="zh">懂客戶與目標</span><span data-l="en">Know customers and goals</span><span data-l="ja">顧客と目標を知る</span></h3>
-              <ul><li><span data-l="zh">了解現有客戶與銷售方式</span><span data-l="en">Learn current customers and how we sell</span><span data-l="ja">既存顧客と販売方法を把握</span></li><li><span data-l="zh">確認行銷要達成的效果</span><span data-l="en">Confirm what marketing should achieve</span><span data-l="ja">マーケティングの期待成果を確認</span></li></ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="days">DAY 31–60</div>
-            <div>
-              <h3><span data-l="zh">跟著業務跑</span><span data-l="en">Go out with sales</span><span data-l="ja">営業に同行する</span></h3>
-              <ul><li><span data-l="zh">爭取參與 B2B 業務拜訪</span><span data-l="en">Join B2B customer visits</span><span data-l="ja">B2B 商談への同行を志願</span></li><li><span data-l="zh">整理客戶常問的問題</span><span data-l="en">Collect customers' common questions</span><span data-l="ja">顧客のよくある質問を整理</span></li></ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="days">DAY 61–90</div>
-            <div>
-              <h3><span data-l="zh">變成行銷素材</span><span data-l="en">Turn it into marketing</span><span data-l="ja">マーケティング素材にする</span></h3>
-              <ul><li><span data-l="zh">把案例整理成可重複用的故事</span><span data-l="en">Shape cases into reusable stories</span><span data-l="ja">事例を再利用できるストーリーに</span></li><li><span data-l="zh">為資安、廠務、研發各寫一套說法</span><span data-l="en">Write a pitch for security, plant, and R&amp;D buyers</span><span data-l="ja">セキュリティ・工場・研究開発向けに訴求を作成</span></li></ul>
-            </div>
+      <div class="schedule">
+        <div class="row">
+          <div class="days">01</div>
+          <div>
+            <h3><span data-l="zh">說好品牌故事</span><span data-l="en">Tell the brand story</span><span data-l="ja">ブランドストーリーを伝える</span></h3>
+            <p><span data-l="zh">在 LinkedIn 與官網補充品牌故事和創辦人理念；成交後，邀請客戶在社群發佈或轉發 MICH 的消息。</span><span data-l="en">Add brand stories and the founder's vision to LinkedIn and the website. After each deal, invite customers to post or share MICH news on social media.</span><span data-l="ja">LinkedIn と公式サイトにブランドストーリーと創業者の理念を追加。成約後は顧客に SNS で MICH の情報を発信・シェアしてもらう。</span></p>
           </div>
         </div>
-
-        <div class="funnel">
-          <div class="label"><span data-l="zh">怎麼看成效</span><span data-l="en">How I measure</span><span data-l="ja">成果の測り方</span></div>
-          <div class="bars">
-            <div class="bar"><span data-l="zh">曝光</span><span data-l="en">Reach</span><span data-l="ja">露出</span></div>
-            <div class="bar"><span data-l="zh">互動</span><span data-l="en">Engagement</span><span data-l="ja">反応</span></div>
-            <div class="bar"><span data-l="zh">轉換</span><span data-l="en">Conversion</span><span data-l="ja">転換</span></div>
+        <div class="row">
+          <div class="days">02</div>
+          <div>
+            <h3><span data-l="zh">找到突破口</span><span data-l="en">Find the entry point</span><span data-l="ja">突破口を見つける</span></h3>
+            <p><span data-l="zh">調查在日本的台灣企業與西方企業，作為打進日本市場的第一步，提高 MICH 在日本的曝光。</span><span data-l="en">Research Taiwanese and Western companies operating in Japan as the first way in, raising MICH's visibility there.</span><span data-l="ja">日本に拠点を持つ台湾企業や欧米企業を調査し、日本市場への足がかりとして MICH の認知度を高める。</span></p>
           </div>
-          <div class="caption"><span data-l="zh">B2B 最看重 <b>lead 品質</b></span><span data-l="en">In B2B, <b>lead quality</b> matters most</span><span data-l="ja">B2B では<b>リードの質</b>を最重視</span></div>
+        </div>
+        <div class="row">
+          <div class="days">03</div>
+          <div>
+            <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask customers for referrals</span><span data-l="ja">既存顧客から紹介を得る</span></h3>
+            <p><span data-l="zh">聯繫現有客戶，請他們引薦日本其他需要 MICH 產品的企業。</span><span data-l="en">Reach out to current customers and ask them to introduce other companies in Japan that need MICH.</span><span data-l="ja">既存顧客に連絡し、MICH を必要とする日本の他企業を紹介してもらう。</span></p>
+          </div>
         </div>
       </div>
     </div>
