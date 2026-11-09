@@ -8,25 +8,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
 <title>蔡承佑 × MICH｜VP 面談</title>
 <style>
+  /* Japanese modernist poster: white paper, a faint layout grid, hard-edged circles, black hairlines.
+     Red, white and blue are the colours Taiwan, Japan and the US share; where red and blue overlap they turn purple. */
   :root {
-    --bg: #fbfbfd;
-    --surface: rgba(255, 255, 255, .55);
-    --line: rgba(30, 34, 48, .12);
-    --ink: #1e2230;
-    --muted: #6b6f7d;
-    /* red, white and blue: the colours Taiwan, Japan and the US share */
-    --me: #4a7fd6;          /* blue */
-    --mich: #e0605a;        /* red */
-    --blend: #9b7bc0;       /* where the two meet: blue + red */
-    --me-ink: #2f63b8;      /* darker shades for text, so it stays readable on the light background */
-    --mich-ink: #c23b35;
-    --shu: #c8432f;         /* vermilion, for the Japanese-style goal slide */
-    --blend-ink: #7a56a8;
-    --duo: linear-gradient(90deg, var(--me), var(--blend), var(--mich));
-    --duo-ink: linear-gradient(90deg, var(--me-ink), var(--blend-ink), var(--mich-ink));
-    --pad-x: clamp(24px, 5vw, 88px);
+    --paper: #fdfdfb;
+    --grid: rgba(20, 24, 40, .045);
+    --ink: #16181f;
+    --muted: #6d7180;
+    --hair: #16181f;
+    --red: #d83a32;
+    --blue: #2f5fc4;
+    --purple: #7a4fb0;
+    --pad-x: clamp(20px, 5vw, 88px);
+    --serif: "Noto Serif TC", "Noto Serif JP", "Hiragino Mincho ProN", "Songti TC", serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, "Noto Sans TC", "PingFang TC", sans-serif;
   }
-  :root[data-lang="ja"] body { font-family: "Noto Sans JP", "Hiragino Sans", sans-serif; }
+  :root[data-lang="ja"] { --serif: "Noto Serif JP", "Hiragino Mincho ProN", serif; }
 
   /* Language switch: show only the current language's text */
   [data-l] { display: none; }
@@ -37,150 +34,128 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
   body {
-    font-family: "Noto Sans TC", -apple-system, "PingFang TC", sans-serif;
-    color: var(--ink); overflow: hidden; background: var(--bg);
+    font-family: var(--sans); color: var(--ink); overflow: hidden;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 80px 80px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 80px 80px,
+      var(--paper);
   }
 
-  /* Aura: two blurred colour fields, me (warm) and MICH (cool).
-     They start apart on slide 1 and drift together on slide 2, blending where they overlap. */
-  .aura { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .aura i {
-    position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%;
-    filter: blur(70px); opacity: .55; mix-blend-mode: multiply;
-    transition: left 1.6s cubic-bezier(.5, 0, .2, 1), top 1.6s cubic-bezier(.5, 0, .2, 1), opacity 1.6s;
-  }
-  .aura .me   { background: radial-gradient(circle, var(--me) 0%, rgba(74, 127, 214, 0) 68%); left: -24vmax; top: 10vh; animation: drift-a 14s ease-in-out infinite alternate; }
-  .aura .mich { background: radial-gradient(circle, var(--mich) 0%, rgba(224, 96, 90, 0) 68%); left: calc(100vw - 38vmax); top: -18vh; animation: drift-b 17s ease-in-out infinite alternate; }
-  .aura .meet { background: radial-gradient(circle, var(--blend) 0%, rgba(155, 123, 192, 0) 65%); width: 40vmax; height: 40vmax; left: calc(50vw - 20vmax); top: calc(50vh - 20vmax); opacity: 0; }
-  :root[data-step="2"] .aura .me   { left: calc(50vw - 46vmax); top: 4vh; }
-  :root[data-step="2"] .aura .mich { left: calc(50vw - 16vmax); top: -4vh; }
-  :root[data-step="2"] .aura .meet { opacity: .35; }
-  @keyframes drift-a { to { transform: translate(4vmax, -3vmax) scale(1.06); } }
-  @keyframes drift-b { to { transform: translate(-4vmax, 4vmax) scale(.95); } }
-  @media (prefers-reduced-motion: reduce) { .aura i { animation: none; transition: none; } }
-
-  /* Header and footer frame every slide */
+  /* Frame: hairline header and footer, like the margins of a poster */
   .top, .bottom {
-    position: fixed; left: 0; right: 0; z-index: 5;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0 var(--pad-x);
+    position: fixed; left: var(--pad-x); right: var(--pad-x); z-index: 5;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    font-size: .78rem; letter-spacing: .14em; text-transform: uppercase;
   }
-  .top { top: 0; height: 72px; }
-  .bottom { bottom: 0; height: 64px; }
-  .who { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .02em; }
-  .who .x { width: 22px; height: 12px; position: relative; }
-  .who .x::before, .who .x::after { content: ""; position: absolute; top: 0; width: 12px; height: 12px; border-radius: 50%; mix-blend-mode: multiply; }
-  .who .x::before { left: 0; background: var(--me); }
-  .who .x::after { right: 0; background: var(--mich); }
-  .who em { font-style: normal; color: var(--muted); font-weight: 400; margin-left: 6px; font-size: .85em; }
-  .langs { display: flex; padding: 3px; border-radius: 999px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(12px); }
+  .top { top: 0; height: 64px; border-bottom: 1px solid var(--hair); }
+  .bottom { bottom: 0; height: 64px; border-top: 1px solid var(--hair); }
+  .who { font-weight: 700; letter-spacing: .08em; }
+  .meta { color: var(--muted); }
+  .langs { justify-self: end; display: flex; gap: 18px; }
   .langs button {
-    border: 0; background: transparent; color: var(--muted); cursor: pointer;
-    font: inherit; font-size: .82em; padding: 5px 14px; border-radius: 999px;
+    border: 0; background: none; padding: 4px 0; cursor: pointer; font: inherit; color: var(--muted);
+    border-bottom: 2px solid transparent;
   }
-  .langs button[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 700; }
+  .langs button[aria-pressed="true"] { color: var(--ink); font-weight: 700; border-color: var(--red); }
+  .count { font-variant-numeric: tabular-nums; }
+  .count b { font-size: 1.6em; letter-spacing: 0; }
+  .marks { color: var(--muted); }
+  .nav { justify-self: end; display: flex; gap: 24px; }
+  .nav button { border: 0; background: none; padding: 4px 0; cursor: pointer; font: inherit; color: var(--ink); letter-spacing: .14em; }
+  .nav button:disabled { color: var(--muted); opacity: .4; cursor: default; }
+  .nav button:hover:not(:disabled) { color: var(--red); }
 
-  .pager { display: flex; align-items: center; gap: 18px; font-variant-numeric: tabular-nums; color: var(--muted); font-size: .85em; }
-  .pager b { color: var(--ink); }
-  .progress { width: 160px; height: 3px; border-radius: 3px; background: var(--line); position: relative; overflow: hidden; }
-  .progress i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--duo); background-size: 160px 100%; transition: width .5s; }
-  .nav { display: flex; gap: 8px; }
-  .nav button {
-    width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .8);
-    background: var(--surface); backdrop-filter: blur(12px); color: var(--ink); cursor: pointer; font-size: 1em;
-  }
-  .nav button:hover:not(:disabled) { background: #fff; }
-  .nav button:disabled { opacity: .35; cursor: default; }
-
-  /* Horizontal track: slides sit side by side and slide left/right */
-  .track {
-    position: relative; z-index: 1;
-    display: flex; height: 100svh;
-    transition: transform .6s cubic-bezier(.7, 0, .2, 1);
-  }
-  @media (prefers-reduced-motion: reduce) { .track { transition: none; } }
+  /* Slides sit on top of each other and cross-fade */
+  .deck { position: relative; height: 100svh; }
   .slide {
-    flex: 0 0 100vw; height: 100%;
-    padding: 72px var(--pad-x) 64px;
-    display: flex; flex-direction: column; justify-content: center;
+    position: absolute; inset: 64px var(--pad-x);
+    opacity: 0; visibility: hidden; transition: opacity .5s, visibility 0s .5s;
   }
+  .slide.is-active { opacity: 1; visibility: visible; transition: opacity .5s; }
 
-  .eyebrow { display: flex; align-items: center; gap: 14px; font-size: .78em; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; font-weight: 600; }
-  .eyebrow::after { content: ""; width: 56px; height: 2px; border-radius: 2px; background: var(--duo); }
-  h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); line-height: 1.15; margin: 18px 0 10px; font-weight: 800; letter-spacing: -.01em; }
-  h2 mark { background: var(--duo-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .lead { color: var(--muted); margin: 0; font-size: 1.05em; }
+  .label { display: flex; align-items: center; gap: 14px; font-size: .78rem; letter-spacing: .22em; font-weight: 700; text-transform: uppercase; }
+  .label i { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
 
-  /* Slide 1: the goal, one sentence and nothing else, dressed in a Japanese (wafuu) style:
-     Mincho serif, a pale vermilion sun behind the words, a seal stamp, and vertical text at the edge */
-  .goal { text-align: center; position: relative; }
-  .goal .sun {
-    position: absolute; left: 50%; top: 50%; z-index: -1;
-    width: min(58vh, 46vw); aspect-ratio: 1; border-radius: 50%;
-    transform: translate(-50%, -46%); background: var(--shu); opacity: .1;
+  /* Shapes: the red circle (Japan's sun) and the blue circle overlap; the lens between them is purple.
+     They scale in each time their slide becomes active. */
+  .shapes .s { transform-box: fill-box; transform-origin: center; transform: scale(.6); opacity: 0; transition: transform 1s cubic-bezier(.2, .8, .2, 1), opacity .6s; }
+  .is-active .shapes .s { transform: none; opacity: 1; }
+  .is-active .shapes .s:nth-child(2) { transition-delay: .12s; }
+  .is-active .shapes .s:nth-child(3) { transition-delay: .3s; }
+  .is-active .shapes .s:nth-child(4) { transition-delay: .4s; }
+
+  /* Slide 1: the goal */
+  .goal { display: grid; grid-template-columns: 11fr 9fr; align-items: center; }
+  .goal .text { position: relative; z-index: 2; padding-left: 64px; }
+  .goal .tate {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif; font-size: .95rem; letter-spacing: .5em; color: var(--muted); font-weight: 600;
   }
-  .goal .pre, .goal h2, .goal .tate { font-family: "Noto Serif TC", "Noto Serif JP", "Hiragino Mincho ProN", "Songti TC", serif; }
-  :root[data-lang="ja"] .goal .pre, :root[data-lang="ja"] .goal h2, .goal .tate { font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif; }
-  .goal .pre { font-size: clamp(1.4rem, 2.6vw, 2.2rem); color: var(--muted); font-weight: 600; margin: 0; letter-spacing: .12em; }
-  .goal h2 { font-size: clamp(2.8rem, 7vw, 6.6rem); line-height: 1.2; margin: 18px 0 0; font-weight: 900; letter-spacing: .04em; }
-  .goal h2 mark { background: none; color: var(--shu); -webkit-text-fill-color: var(--shu); }
-  .goal .hanko {
+  .goal .tate::before { content: ""; width: 1px; height: 56px; background: var(--red); }
+  .goal .tate span { writing-mode: vertical-rl; }
+  .goal .pre { font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.9rem); color: var(--muted); font-weight: 600; margin: 36px 0 10px; letter-spacing: .1em; }
+  .goal h2 { font-family: var(--serif); font-size: clamp(2.8rem, 6.4vw, 6.2rem); line-height: 1.18; margin: 0; font-weight: 900; letter-spacing: .03em; }
+  .goal h2 mark { background: none; color: var(--red); }
+  .hanko {
     display: inline-flex; align-items: center; justify-content: center; vertical-align: .9em;
     width: 1.5em; height: 1.5em; margin-left: .3em; border-radius: .14em;
-    background: var(--shu); color: #fff; font-size: .4em; line-height: 1; letter-spacing: 0;
+    background: var(--red); color: #fff; font-size: .4em; line-height: 1; letter-spacing: 0;
     transform: rotate(-6deg); box-shadow: inset 0 0 0 .08em rgba(255, 255, 255, .4);
   }
-  .goal .tate {
-    position: absolute; left: var(--pad-x); top: 50%; transform: translateY(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 18px;
-    font-size: 1.05rem; letter-spacing: .5em; color: var(--muted); font-weight: 600;
+  .goal .shapes { position: relative; width: 100%; max-height: calc(100svh - 200px); aspect-ratio: 1; justify-self: center; }
+  .goal .shapes svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .goal .tag { font-family: var(--sans); font-size: 13px; letter-spacing: .2em; fill: var(--ink); font-weight: 700; }
+
+  /* Slide 2: how, three columns divided by hairlines */
+  .how { display: flex; flex-direction: column; justify-content: center; }
+  .how .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  .how h2 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4.6rem); margin: 14px 0 0; font-weight: 900; letter-spacing: .04em; }
+  .how .shapes { width: clamp(160px, 18vw, 260px); }
+  .how .shapes svg { width: 100%; display: block; }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; border-top: 1px solid var(--hair); }
+  .col { padding: 28px 32px 8px; opacity: 0; transform: translateY(70px); transition: opacity .2s, transform .2s; }
+  .col + .col { border-left: 1px solid var(--hair); }
+  .col:first-child { padding-left: 0; }
+  .is-active .col { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: .3s; }
+  .is-active .col:nth-child(2) { transition-delay: .5s; }
+  .is-active .col:nth-child(3) { transition-delay: .7s; }
+  .col .n { display: block; font-family: var(--sans); font-size: clamp(5rem, 9vw, 8.5rem); font-weight: 800; line-height: .85; letter-spacing: -.04em; color: var(--blue); }
+  .col:nth-child(2) .n { color: var(--purple); }
+  .col:nth-child(3) .n { color: var(--red); }
+  .col h3 { font-family: var(--serif); font-size: 1.6em; margin: 26px 0 8px; font-weight: 900; }
+  .col p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .shapes .s, .col { transition: none !important; }
+    .shapes .s, .col { opacity: 1; transform: none; }
   }
-  .goal .tate::before { content: ""; width: 1px; height: 64px; background: var(--shu); }
-  .goal .tate span { writing-mode: vertical-rl; }
 
-  /* Slide 2: the question, then three short steps coloured blue → green → yellow.
-     The cards rise in one after another each time slide 2 comes on screen. */
-  .how h2 { font-size: clamp(2.2rem, 4.6vw, 4.2rem); margin: 0; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; }
-  .step-card {
-    padding: 30px 30px 34px; border-radius: 24px; background: var(--surface); border: 1px solid rgba(255, 255, 255, .8); backdrop-filter: blur(16px); box-shadow: 0 12px 40px rgba(60, 60, 110, .08);
-    opacity: 0; transform: translateY(70px);
-    transition: opacity .2s, transform .2s;
-  }
-  :root[data-step="2"] .step-card { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1); transition-delay: .45s; }
-  :root[data-step="2"] .step-card:nth-child(2) { transition-delay: .65s; }
-  :root[data-step="2"] .step-card:nth-child(3) { transition-delay: .85s; }
-  @media (prefers-reduced-motion: reduce) { .step-card { opacity: 1; transform: none; } }
-  .step-card .n { display: block; font-size: 4em; font-weight: 900; line-height: 1; color: var(--me-ink); font-variant-numeric: tabular-nums; }
-  .step-card:nth-child(2) .n { color: var(--blend-ink); }
-  .step-card:nth-child(3) .n { color: var(--mich-ink); }
-  .step-card h3 { margin: 20px 0 8px; font-size: 1.45em; }
-  .step-card p { margin: 0; color: var(--muted); font-size: 1em; line-height: 1.6; }
-
-
-  /* Phones: stack the slides and scroll normally */
+  /* Phones: stack both slides and scroll normally */
   @media (max-width: 820px) {
     body { overflow: auto; }
-    .top { position: sticky; height: 60px; background: rgba(251, 251, 253, .7); backdrop-filter: blur(12px); }
-    .bottom { display: none; }
-    .track { flex-direction: column; height: auto; transform: none !important; }
-    .slide { flex: none; height: auto; padding: 40px 20px 56px; }
-    .who em { display: none; }
-    .aura .me { left: -30vmax; top: 0; }
-    .aura .mich { left: calc(100vw - 32vmax); top: 40vh; }
-    .steps { grid-template-columns: 1fr; }
-    .step-card { opacity: 1; transform: none; }
+    .top { position: sticky; background: var(--paper); left: auto; right: auto; margin: 0 var(--pad-x); grid-template-columns: 1fr auto; }
+    .top .meta, .bottom { display: none; }
+    .deck { height: auto; }
+    .slide { position: relative; inset: auto; opacity: 1; visibility: visible; padding: 40px 0 56px; margin: 0 var(--pad-x); }
+    .slide + .slide { border-top: 1px solid var(--hair); }
+    .shapes .s, .col { opacity: 1 !important; transform: none !important; }
+    .goal { grid-template-columns: 1fr; }
+    .goal .text { padding-left: 0; }
     .goal .tate { display: none; }
-    .goal .sun { width: 80vw; }
+    .goal .shapes { width: 80%; margin-top: 24px; }
+    .how .head { flex-direction: column; align-items: flex-start; }
+    .cols { grid-template-columns: 1fr; }
+    .col, .col:first-child { padding: 24px 0; }
+    .col + .col { border-left: 0; border-top: 1px solid var(--hair); }
   }
 </style>
 </head>
 <body>
 
-<div class="aura" aria-hidden="true"><i class="me"></i><i class="mich"></i><i class="meet"></i></div>
-
 <header class="top">
-  <div class="who">蔡承佑 <span class="x" aria-hidden="true"></span> MICH<em><span data-l="zh">VP 面談 · 2026.11.11</span><span data-l="en">VP Interview · Nov 11, 2026</span><span data-l="ja">VP 面談 · 2026.11.11</span></em></div>
+  <div class="who">蔡承佑 × MICH</div>
+  <div class="meta"><span data-l="zh">VP 面談 · 2026.11.11</span><span data-l="en">VP Interview · 2026.11.11</span><span data-l="ja">VP 面談 · 2026.11.11</span></div>
   <div class="langs" role="group" aria-label="Language">
     <button type="button" data-set="zh" aria-pressed="true">中</button>
     <button type="button" data-set="en" aria-pressed="false">EN</button>
@@ -188,29 +163,65 @@
   </div>
 </header>
 
-<main class="track" id="track">
+<main class="deck" id="deck">
 
-  <section class="slide goal" id="s-goal" aria-label="Goal">
-    <div class="sun" aria-hidden="true"></div>
-    <div class="tate" aria-hidden="true"><span>日本市場へ、一歩ずつ。</span></div>
-    <p class="pre"><span data-l="zh">我的目標是…</span><span data-l="en">My goal is…</span><span data-l="ja">私の目標は…</span></p>
-    <h2><span data-l="zh">把 MICH 帶進<mark>日本市場</mark></span><span data-l="en">to bring MICH into <mark>Japan</mark></span><span data-l="ja">MICH を<mark>日本市場</mark>へ</span><span class="hanko" aria-hidden="true">進</span></h2>
+  <section class="slide goal is-active" id="s-goal" aria-label="Goal">
+    <div class="text">
+      <div class="tate" aria-hidden="true"><span>日本市場へ、一歩ずつ。</span></div>
+      <div class="label"><i></i><span data-l="zh">目標</span><span data-l="en">Goal</span><span data-l="ja">目標</span></div>
+      <p class="pre"><span data-l="zh">我的目標是…</span><span data-l="en">My goal is…</span><span data-l="ja">私の目標は…</span></p>
+      <h2><span data-l="zh">把 MICH 帶進<br><mark>日本市場</mark></span><span data-l="en">to bring MICH<br>into <mark>Japan</mark></span><span data-l="ja">MICH を<br><mark>日本市場</mark>へ</span><span class="hanko" aria-hidden="true">進</span></h2>
+    </div>
+    <div class="shapes" aria-hidden="true">
+      <svg viewBox="0 0 520 520">
+        <defs><clipPath id="blueDisc"><circle cx="190" cy="300" r="150"/></clipPath></defs>
+        <circle class="s" cx="190" cy="300" r="150" fill="var(--blue)"/>
+        <circle class="s" cx="320" cy="220" r="185" fill="var(--red)"/>
+        <circle class="s" cx="320" cy="220" r="185" fill="var(--purple)" clip-path="url(#blueDisc)"/>
+        <g class="s">
+          <line x1="0" y1="470" x2="520" y2="470" stroke="var(--hair)" stroke-width="1"/>
+          <text class="tag" x="0" y="500">TW</text>
+          <text class="tag" x="236" y="500">JP</text>
+          <text class="tag" x="492" y="500">US</text>
+        </g>
+      </svg>
+    </div>
   </section>
 
   <section class="slide how" id="s-how" aria-label="How">
-    <h2><span data-l="zh">如何做到…</span><span data-l="en">How I'll get there…</span><span data-l="ja">どう実現するか…</span></h2>
-    <div class="steps">
-      <article class="step-card">
+    <div class="head">
+      <div>
+        <div class="label"><i></i><span data-l="zh">方法</span><span data-l="en">How</span><span data-l="ja">方法</span></div>
+        <h2><span data-l="zh">如何做到…</span><span data-l="en">How I'll get there…</span><span data-l="ja">どう実現するか…</span></h2>
+      </div>
+      <div class="shapes" aria-hidden="true">
+        <svg viewBox="0 0 260 100">
+          <defs>
+            <clipPath id="c1"><circle cx="50" cy="50" r="50"/></clipPath>
+            <clipPath id="c3"><circle cx="210" cy="50" r="50"/></clipPath>
+          </defs>
+          <circle class="s" cx="50" cy="50" r="50" fill="var(--blue)"/>
+          <circle class="s" cx="210" cy="50" r="50" fill="var(--red)"/>
+          <circle class="s" cx="130" cy="50" r="50" fill="var(--purple)"/>
+          <g class="s">
+            <circle cx="130" cy="50" r="50" fill="#1d3f8f" clip-path="url(#c1)"/>
+            <circle cx="130" cy="50" r="50" fill="#9c2a3a" clip-path="url(#c3)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="cols">
+      <article class="col">
         <span class="n">1</span>
         <h3><span data-l="zh">說好品牌故事</span><span data-l="en">Tell the brand story</span><span data-l="ja">ブランドストーリーを伝える</span></h3>
         <p><span data-l="zh">LinkedIn、官網、客戶轉發</span><span data-l="en">LinkedIn, website, customer shares</span><span data-l="ja">LinkedIn・公式サイト・顧客のシェア</span></p>
       </article>
-      <article class="step-card">
+      <article class="col">
         <span class="n">2</span>
         <h3><span data-l="zh">找到突破口</span><span data-l="en">Find the entry point</span><span data-l="ja">突破口を見つける</span></h3>
         <p><span data-l="zh">從在日的台灣與西方企業切入</span><span data-l="en">Start with Taiwanese and Western firms in Japan</span><span data-l="ja">在日の台湾企業・欧米企業から</span></p>
       </article>
-      <article class="step-card">
+      <article class="col">
         <span class="n">3</span>
         <h3><span data-l="zh">請現有客戶引薦</span><span data-l="en">Ask for referrals</span><span data-l="ja">既存顧客からの紹介</span></h3>
         <p><span data-l="zh">介紹日本其他需要 MICH 的企業</span><span data-l="en">Introductions to companies in Japan that need MICH</span><span data-l="ja">MICH を必要とする日本企業を紹介してもらう</span></p>
@@ -221,10 +232,11 @@
 </main>
 
 <footer class="bottom">
-  <div class="pager"><span><b id="cur">01</b> / <span id="total">02</span></span><div class="progress"><i id="bar"></i></div></div>
+  <div class="count"><b id="cur">01</b> / <span id="total">02</span></div>
+  <div class="marks">TW · JP · US</div>
   <div class="nav">
-    <button type="button" id="prev" aria-label="Previous">←</button>
-    <button type="button" id="next" aria-label="Next">→</button>
+    <button type="button" id="prev">← <span data-l="zh">上一頁</span><span data-l="en">Prev</span><span data-l="ja">前へ</span></button>
+    <button type="button" id="next"><span data-l="zh">下一頁</span><span data-l="en">Next</span><span data-l="ja">次へ</span> →</button>
   </div>
 </footer>
 
@@ -254,8 +266,7 @@
 </script>
 <script>
   (function () {
-    var track = document.getElementById("track");
-    var slides = Array.prototype.slice.call(track.querySelectorAll(".slide"));
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
     var prev = document.getElementById("prev"), next = document.getElementById("next");
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
     var index = 0;
@@ -263,10 +274,8 @@
 
     function go(i) {
       index = Math.max(0, Math.min(slides.length - 1, i));
-      track.style.transform = "translateX(" + (-index * 100) + "vw)";
+      slides.forEach(function (s, j) { s.classList.toggle("is-active", j === index); });
       document.getElementById("cur").textContent = pad(index + 1);
-      document.getElementById("bar").style.width = ((index + 1) / slides.length * 100) + "%";
-      document.documentElement.setAttribute("data-step", String(index + 1));
       prev.disabled = index === 0;
       next.disabled = index === slides.length - 1;
       history.replaceState(null, "", location.search + "#" + slides[index].id);
