@@ -111,8 +111,6 @@
   .how { display: flex; flex-direction: column; justify-content: center; }
   .how .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
   .how h2 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4.6rem); margin: 14px 0 0; font-weight: 900; letter-spacing: .04em; }
-  .how .shapes { width: clamp(160px, 18vw, 260px); }
-  .how .shapes svg { width: 100%; display: block; }
   .cols { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; border-top: 1px solid var(--hair); }
   .col { padding: 28px 32px 8px; opacity: 0; transform: translateY(70px); transition: opacity .2s, transform .2s; }
   .col + .col { border-left: 1px solid var(--hair); }
@@ -193,21 +191,6 @@
       <div>
         <div class="label"><i></i><span data-l="zh">方法</span><span data-l="en">How</span><span data-l="ja">方法</span></div>
         <h2><span data-l="zh">如何做到…</span><span data-l="en">How I'll get there…</span><span data-l="ja">どう実現するか…</span></h2>
-      </div>
-      <div class="shapes" aria-hidden="true">
-        <svg viewBox="0 0 260 100">
-          <defs>
-            <clipPath id="c1"><circle cx="50" cy="50" r="50"/></clipPath>
-            <clipPath id="c3"><circle cx="210" cy="50" r="50"/></clipPath>
-          </defs>
-          <circle class="s" cx="50" cy="50" r="50" fill="var(--blue)"/>
-          <circle class="s" cx="210" cy="50" r="50" fill="var(--red)"/>
-          <circle class="s" cx="130" cy="50" r="50" fill="var(--purple)"/>
-          <g class="s">
-            <circle cx="130" cy="50" r="50" fill="#1d3f8f" clip-path="url(#c1)"/>
-            <circle cx="130" cy="50" r="50" fill="#9c2a3a" clip-path="url(#c3)"/>
-          </g>
-        </svg>
       </div>
     </div>
     <div class="cols">
