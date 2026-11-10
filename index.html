@@ -118,6 +118,17 @@
   .col h3 { font-family: var(--serif); font-size: 1.6em; margin: 26px 0 8px; font-weight: 900; }
   .col p { margin: 0; color: var(--muted); line-height: 1.6; }
 
+  /* Slide 3: the same three columns as slide 2, opened up with the details */
+  .detail .col .n { font-size: clamp(3rem, 5vw, 4.4rem); }
+  .detail .col h3 { margin-top: 18px; }
+  .detail ul { margin: 14px 0 0; padding: 0; list-style: none; }
+  .detail li { padding: 7px 0; border-bottom: 1px solid var(--grid); }
+  .detail li::before { content: "— "; color: var(--blue); }
+  .detail .body > p { margin-top: 14px; }
+  .detail .say { color: var(--ink); font-family: var(--serif); font-size: 1.15em; line-height: 1.7; font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chips > span { padding: 6px 14px; border: 1px solid var(--hair); font-weight: 700; letter-spacing: .03em; background: var(--paper); }
+
   @media (prefers-reduced-motion: reduce) {
     .slide, .goal .sun, .col { transition: none !important; }
     .col { opacity: 1; transform: none; }
@@ -138,6 +149,14 @@
     .col, .col:first-child { padding: 12px 0; display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; align-items: center; }
     .col .n { grid-row: span 2; font-size: 3.4rem; }
     .col h3 { margin: 0 0 4px; font-size: 1.2em; }
+    .detail .col .n { font-size: 2.6rem; align-self: start; }
+    .detail .col h3 { margin-top: 0; }
+    .detail ul, .detail .body > p, .chips { margin-top: 6px; }
+    .detail li { padding: 2px 0; border: 0; }
+    .detail .say { font-size: 1em; line-height: 1.55; }
+    .detail .col { padding: 10px 0; }
+    .chips { gap: 6px; }
+    .chips > span { padding: 3px 10px; font-size: .9em; }
     .col + .col { border-left: 0; border-top: 1px solid var(--hair); }
   }
 </style>
@@ -188,6 +207,44 @@
         <span class="n">3</span>
         <h3><span data-l="zh">客戶引薦</span><span data-l="en">Referrals</span><span data-l="ja">顧客紹介</span></h3>
         <p><span data-l="zh">介紹日本其他需要 MICH 的企業</span><span data-l="en">Introductions to companies in Japan that need MICH</span><span data-l="ja">MICH を必要とする日本企業を紹介してもらう</span></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="slide how detail" id="s-detail" aria-label="In detail">
+    <div class="head">
+      <div>
+        <div class="label"><i></i><span data-l="zh">細節</span><span data-l="en">Details</span><span data-l="ja">詳細</span></div>
+        <h2><span data-l="zh">具體來說…</span><span data-l="en">In detail…</span><span data-l="ja">具体的には…</span></h2>
+      </div>
+    </div>
+    <div class="cols">
+      <article class="col">
+        <span class="n">1</span>
+        <h3><span data-l="zh">品牌故事</span><span data-l="en">Brand story</span><span data-l="ja">ブランドストーリー</span></h3>
+        <div class="body">
+          <ul>
+            <li><span data-l="zh">公司經營理念</span><span data-l="en">Company philosophy</span><span data-l="ja">経営理念</span></li>
+            <li><span data-l="zh">歷史沿革</span><span data-l="en">History</span><span data-l="ja">沿革</span></li>
+            <li><span data-l="zh">產品優勢</span><span data-l="en">Product strengths</span><span data-l="ja">製品の強み</span></li>
+            <li><span data-l="zh">產品應用</span><span data-l="en">Use cases</span><span data-l="ja">製品の活用事例</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="col">
+        <span class="n">2</span>
+        <h3><span data-l="zh">突破口</span><span data-l="en">Entry point</span><span data-l="ja">突破口</span></h3>
+        <div class="body">
+          <p><span data-l="zh">與台灣、日本都有企業關係的公司</span><span data-l="en">Companies with ties to both Taiwan and Japan</span><span data-l="ja">台湾と日本の両方に関係を持つ企業</span></p>
+          <div class="chips"><span>KKBOX</span><span>au（KDDI）</span><span><span data-l="zh">Suntory 三得利</span><span data-l="en">Suntory</span><span data-l="ja">サントリー</span></span></div>
+        </div>
+      </article>
+      <article class="col">
+        <span class="n">3</span>
+        <h3><span data-l="zh">客戶引薦</span><span data-l="en">Referrals</span><span data-l="ja">顧客紹介</span></h3>
+        <div class="body">
+          <p class="say"><span data-l="zh">詢問現有客戶在日本是否有合作對象，並透過他們推廣 MICH。</span><span data-l="en">Ask current customers whether they have partners in Japan, and promote MICH through them.</span><span data-l="ja">既存顧客に日本での取引先があるかを尋ね、彼らを通じて MICH を広める。</span></p>
+        </div>
       </article>
     </div>
   </section>
