@@ -125,21 +125,21 @@
     .col { opacity: 1; transform: none; }
   }
 
-  /* Phones: stack both slides and scroll normally */
+  /* Phones: the same one-slide-at-a-time deck in a tighter frame; tap the arrows or swipe to change slides */
   @media (max-width: 820px) {
-    body { overflow: auto; }
-    .top { position: sticky; background: var(--paper); left: auto; right: auto; margin: 0 var(--pad-x); grid-template-columns: 1fr auto; }
-    .top .meta, .bottom { display: none; }
-    .deck { height: auto; }
-    .slide { position: relative; inset: auto; opacity: 1; visibility: visible; padding: 40px 0 56px; margin: 0 var(--pad-x); }
-    .slide + .slide { border-top: 1px solid var(--hair); }
-    .col { opacity: 1 !important; transform: none !important; }
-    .goal { min-height: 70svh; }
-    .goal .sun { width: 80vw; opacity: .12; transform: translate(-50%, -50%); }
+    .top, .bottom { height: 56px; letter-spacing: .1em; grid-template-columns: 1fr auto; }
+    .top .meta, .marks { display: none; }
+    .slide { inset: 56px var(--pad-x); overflow-y: auto; }
+    .nav { gap: 10px; }
+    .nav button { width: 44px; height: 44px; border: 1px solid var(--hair); border-radius: 50%; letter-spacing: 0; font-size: 1.1rem; }
+    .nav button [data-l] { display: none !important; }
+    .goal .sun { width: 86vw; }
     .goal .tate { display: none; }
-    .how .head { flex-direction: column; align-items: flex-start; }
-    .cols { grid-template-columns: 1fr; }
-    .col, .col:first-child { padding: 24px 0; }
+    .how h2 { font-size: 2rem; }
+    .cols { grid-template-columns: 1fr; margin-top: 18px; }
+    .col, .col:first-child { padding: 12px 0; display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; align-items: center; }
+    .col .n { grid-row: span 2; font-size: 3.4rem; }
+    .col h3 { margin: 0 0 4px; font-size: 1.2em; }
     .col + .col { border-left: 0; border-top: 1px solid var(--hair); }
   }
 </style>
@@ -256,6 +256,16 @@
       if (["ArrowRight", "ArrowDown", "PageDown", " "].indexOf(ev.key) >= 0) { ev.preventDefault(); go(index + (ev.shiftKey && ev.key === " " ? -1 : 1)); }
       else if (["ArrowLeft", "ArrowUp", "PageUp"].indexOf(ev.key) >= 0) { ev.preventDefault(); go(index - 1); }
     });
+
+    // Swipe left/right on touch screens
+    var sx = null, sy = null;
+    document.addEventListener("touchstart", function (ev) { sx = ev.touches[0].clientX; sy = ev.touches[0].clientY; }, { passive: true });
+    document.addEventListener("touchend", function (ev) {
+      if (sx === null) return;
+      var dx = ev.changedTouches[0].clientX - sx, dy = ev.changedTouches[0].clientY - sy;
+      sx = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+    }, { passive: true });
 
     // Open at the slide in the URL, if any
     var start = slides.findIndex(function (s) { return "#" + s.id === location.hash; });
