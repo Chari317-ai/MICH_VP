@@ -128,6 +128,9 @@
   .detail .say { color: var(--ink); font-family: var(--serif); font-size: 1.15em; line-height: 1.7; font-weight: 600; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .chips > span { padding: 6px 14px; border: 1px solid var(--hair); font-weight: 700; letter-spacing: .03em; background: var(--paper); }
+  .chips > i { font-style: normal; align-self: center; color: var(--muted); }
+  .detail .way { margin-top: 16px; font-size: .82em; font-weight: 700; letter-spacing: .06em; color: var(--purple); }
+  .detail .way + .chips { margin-top: 8px; }
 
   @media (prefers-reduced-motion: reduce) {
     .slide, .goal .sun, .col { transition: none !important; }
@@ -157,7 +160,13 @@
     .detail .col { padding: 10px 0; }
     .chips { gap: 6px; }
     .chips > span { padding: 3px 10px; font-size: .9em; }
+    .detail .way { margin-top: 6px; }
+    .detail .way + .chips { margin-top: 4px; }
     .col + .col { border-left: 0; border-top: 1px solid var(--hair); }
+  }
+  /* Short phones (e.g. iPhone SE): drop the intro line above A/B so slide 3 still fits */
+  @media (max-width: 820px) and (max-height: 700px) {
+    .detail .col:nth-child(2) .body > p { display: none; }
   }
 </style>
 </head>
@@ -235,8 +244,11 @@
         <span class="n">2</span>
         <h3><span data-l="zh">突破口</span><span data-l="en">Entry point</span><span data-l="ja">突破口</span></h3>
         <div class="body">
-          <p><span data-l="zh">與台灣、日本都有企業關係的公司</span><span data-l="en">Companies with ties to both Taiwan and Japan</span><span data-l="ja">台湾と日本の両方に関係を持つ企業</span></p>
-          <div class="chips"><span>KKBOX</span><span>au（KDDI）</span><span><span data-l="zh">Suntory 三得利</span><span data-l="en">Suntory</span><span data-l="ja">サントリー</span></span></div>
+          <p><span data-l="zh">從企業關係找出潛在客戶</span><span data-l="en">Find prospects through corporate ties</span><span data-l="ja">企業間の関係から見込み客を探す</span></p>
+          <div class="way"><span data-l="zh">A · 看客戶的股東結構</span><span data-l="en">A · Follow customers' shareholders</span><span data-l="ja">A · 顧客の株主構成をたどる</span></div>
+          <div class="chips"><span>KKBOX</span><i aria-hidden="true">→</i><span>KDDI（au）</span></div>
+          <div class="way"><span data-l="zh">B · 在台日商 × 生技醫藥</span><span data-l="en">B · Japanese firms in Taiwan × life sciences</span><span data-l="ja">B · 在台日系企業 × ライフサイエンス</span></div>
+          <div class="chips"><span><span data-l="zh">Suntory 三得利</span><span data-l="en">Suntory</span><span data-l="ja">サントリー</span></span></div>
         </div>
       </article>
       <article class="col">
